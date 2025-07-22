@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends
 from sqlmodel import SQLModel, select, Session
 
-from .database import get_db, engine
-from .models import (
+from database import get_db, engine
+from models import (
     Departement,
     Commune,
     Client,
