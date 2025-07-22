@@ -44,23 +44,6 @@ class Client(SQLModel, table=True):
     portcli: str | None = Field(default=None, max_length=10, nullable=True)
     newsletter: int | None = Field(default=None, nullable=True)
 
-class Commande(SQLModel, table=True):
-    """Table représentant les commandes passées par les clients."""
-    
-    __tablename__ = "t_entcde"
-    
-    codcde: int | None = Field(default=None, primary_key=True)
-    datcde: date | None = Field(default=None, nullable=True)
-    codcli: int | None = Field(default=None, foreign_key="t_client.codcli", nullable=True)
-    timbrecli: float | None = Field(default=None, nullable=True)
-    timbrecde: float | None = Field(default=None, nullable=True)
-    nbcolis: int = Field(default=1)
-    cheqcli: float | None = Field(default=None, nullable=True)
-    idcondit: int = Field(default=0)
-    cdeComt: str | None = Field(default=None, max_length=255, nullable=True)
-    barchive: int = Field(default=0)
-    bstock: int = Field(default=0)
-
 class Conditionnement(SQLModel, table=True):
     """Table représentant les conditionnements disponibles pour les objets."""
 

@@ -2,11 +2,10 @@ from fastapi import FastAPI, Depends
 from sqlmodel import SQLModel, select, Session
 
 from .database import get_db, engine
-from .models import (
+from .models_file import (
     Departement,
     Commune,
     Client,
-    Commande,
     Conditionnement,
     Objet,
     ObjetCond,
@@ -18,6 +17,8 @@ from .models import (
     Utilisateur,
     RoleUtilisateur
 )
+
+from .models import commande
 
 app = FastAPI()
 SQLModel.metadata.create_all(bind=engine)
