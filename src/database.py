@@ -1,12 +1,17 @@
 from sqlmodel import create_engine, Session
+import os
+from dotenv import load_dotenv, dotenv_values
+
+
+load_dotenv()
 
 # Configuration de la base de données
 DB_CONFIG = {
     "connector": "mysql+pymysql",
-    "username": "root",
-    "password": "root",
-    "host": "localhost",
-    "database": "fromagerie_com"
+    "username": os.getenv("DB_USERNAME"),
+    "password": os.getenv("DB_PASSWORD"),
+    "host": os.getenv("DB_HOST"),
+    "database": os.getenv("DB_NAME")
 }
 
 # URL de connexion à la base de données
