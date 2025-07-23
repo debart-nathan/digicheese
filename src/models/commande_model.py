@@ -4,7 +4,7 @@ from datetime import date
 class Commande(SQLModel, table=True):
     """Table représentant les commandes passées par les clients."""
     
-    __tablename__ = "t_commande"
+    __tablename__ = "t_commandes"
     
     commande_id: int | None = Field(default=None, primary_key=True)
     commande_date: date | None = Field(default=None, nullable=True)
