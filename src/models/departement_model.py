@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, Field, Relationship
-from .commune_model import Commune
+
 from typing import List
 
 class Departement(SQLModel, table=True):
