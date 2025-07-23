@@ -2,11 +2,10 @@ from fastapi import FastAPI, Depends
 from sqlmodel import SQLModel, select, Session
 
 from .database import get_db, engine
-from .models import (
+from .models_file import (
     Departement,
     Commune,
     Client,
-    Commande,
     Conditionnement,
     Objet,
     ObjetCond,
@@ -19,7 +18,10 @@ from .models import (
     RoleUtilisateur
 )
 
+from .routers import router_commande
+
 app = FastAPI()
+app.include_router(router_commande)
 SQLModel.metadata.create_all(bind=engine)
 
 @app.get("/")
