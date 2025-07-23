@@ -46,6 +46,11 @@ class ClientCreate(ClientBase):
 
 
 class ClientUpdate(SQLModel):
+    """_summary_
+
+    Args:
+        SQLModel (_type_): _description_
+    """
     client_genre: str | None = None
     client_nom: str | None = None
     client_prenom: str | None = None
@@ -57,3 +62,11 @@ class ClientUpdate(SQLModel):
     client_telephone_portable: str | None = None
     client_email: str | None = None
     client_newsletter: int | None = None
+
+class ClientRead(ClientBase):
+    """_summary_
+
+    Args:
+        ClientBase (_type_): _description_
+    """
+    client_id: int
