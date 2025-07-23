@@ -5,7 +5,7 @@ from ..models import Departement
 
 router = APIRouter(prefix="/departement",tags=['Departement'])
 
-@router.get("")
+@router.get("/")
 def get_all_departements(session: Session= Depends(get_db))->list[Departement]:
     return []
 
@@ -13,7 +13,7 @@ def get_all_departements(session: Session= Depends(get_db))->list[Departement]:
 def get_departement(id:int,session: Session= Depends(get_db)):
     pass
 
-@router.post("")
+@router.post("/")
 def post_departement(session: Session= Depends(get_db)):
     pass
 

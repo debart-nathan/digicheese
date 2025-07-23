@@ -5,7 +5,7 @@ from ..models import Commune
 
 router = APIRouter(prefix="/commune",tags=['Commune'])
 
-@router.get("")
+@router.get("/")
 def get_all_communes(session: Session= Depends(get_db))->list[Commune]:
     return []
 
@@ -13,7 +13,7 @@ def get_all_communes(session: Session= Depends(get_db))->list[Commune]:
 def get_commune(id:int,session: Session= Depends(get_db)):
     pass
 
-@router.post("")
+@router.post("/")
 def post_commune(session: Session= Depends(get_db)):
     pass
 

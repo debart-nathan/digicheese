@@ -5,7 +5,7 @@ from ..models import DetailCommande
 
 router = APIRouter(prefix="/detailcommande",tags=['DetailCommande'])
 
-@router.get("")
+@router.get("/")
 def get_all_detailcommandes(session: Session= Depends(get_db))->list[DetailCommande]:
     return []
 
@@ -13,7 +13,7 @@ def get_all_detailcommandes(session: Session= Depends(get_db))->list[DetailComma
 def get_detailcommande(id:int,session: Session= Depends(get_db)):
     pass
 
-@router.post("")
+@router.post("/")
 def post_detailcommande(session: Session= Depends(get_db)):
     pass
 
