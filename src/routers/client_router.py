@@ -5,7 +5,7 @@ from ..models import Client
 
 router = APIRouter(prefix="/client",tags=['Client'])
 
-@router.get("")
+@router.get("/")
 def get_all_clients(session: Session= Depends(get_db))->list[Client]:
     return []
 
@@ -13,7 +13,7 @@ def get_all_clients(session: Session= Depends(get_db))->list[Client]:
 def get_client(id:int,session: Session= Depends(get_db)):
     pass
 
-@router.post("")
+@router.post("/")
 def post_client(session: Session= Depends(get_db)):
     pass
 
