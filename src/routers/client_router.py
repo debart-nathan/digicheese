@@ -5,11 +5,11 @@ from ..models import Client, ClientCreate, ClientUpdate, ClientRead
 
 router = APIRouter(prefix="/client",tags=['Client'])
 
-@router.get("/")
-def get_all_clients(client: ClientRead, session: Session= Depends(get_db))->list[ClientRead]:
+@router.get("/", response_model=list[ClientRead])
+def get_all_clients(session: Session= Depends(get_db))->list[ClientRead]:
     return []
 
-@router.get("/{id}" )
+@router.get("/{id}", response_model=ClientRead)
 def get_client(id:int, client: ClientRead, session: Session= Depends(get_db)):
     pass
 
