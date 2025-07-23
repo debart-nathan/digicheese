@@ -5,7 +5,6 @@ from .database import get_db, engine
 from .models_file import (
     Departement,
     Commune,
-    Client,
     Conditionnement,
     Objet,
     ObjetCond,
