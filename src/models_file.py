@@ -90,16 +90,6 @@ class ObjetCond(SQLModel, table=True):
     objets: Objet | None = Relationship(back_populates="condit")
     condit: Conditionnement | None = Relationship(back_populates="objets")
 
-class Detail(SQLModel, table=True):
-    """Table représentant les détails des commandes."""
-    
-    __tablename__ = "t_dtlcode"
-    
-    id: int | None = Field(default=None, primary_key=True) 
-    codcde: int | None = Field(default=None, foreign_key="t_entcde.codcde", index=True, nullable=True)
-    qte: int = Field(default=1)
-    colis: int = Field(default=1)
-    commentaire: str | None = Field(default=None, max_length=100, nullable=True)
 
 class DetailObjet(SQLModel, table=True):
     """Table représentant les détails des objets associés aux commandes."""
