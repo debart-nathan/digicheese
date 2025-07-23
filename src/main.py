@@ -18,10 +18,10 @@ from .models_file import (
     RoleUtilisateur
 )
 
-from .routers.commande_router import router as commande_router
+from .routers import router_commande
 
 app = FastAPI()
-app.include_router(commande_router)
+app.include_router(router_commande)
 SQLModel.metadata.create_all(bind=engine)
 
 @app.get("/")
