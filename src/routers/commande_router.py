@@ -6,7 +6,7 @@ from ..models import Commande
 router = APIRouter(prefix="/commande",tags=['Commande'])
 
 @router.get("")
-def get_commandes(session: Session= Depends(get_db))->list[Commande]:
+def get_all_commandes(session: Session= Depends(get_db))->list[Commande]:
     return []
 
 @router.get("/{id}" )
