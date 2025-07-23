@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel, Field, Relationship
 from .departement_model import Departement
 
+
 class Commune(SQLModel, table=True):
     """Table représentant les communes associées à un département."""
     
@@ -12,3 +13,19 @@ class Commune(SQLModel, table=True):
     commune_ville: str | None = Field(default=None, max_length=50, nullable=True)
     
     departement: Departement | None = Relationship(back_populates="communes")
+
+class CommuneBase(SQLModel):
+    fk_commune_departement: str
+    commune_codepostal: str
+    commune_ville: str
+
+class CommuneCreate(CommuneBase):
+    pass  # héritage direct, tous champs requis
+
+class CommuneUpdate(SQLModel):
+    fk_commune_departement: str
+    commune_codepostal: str | None = None
+    commune_ville: str | None = None
+
+class CommuneRead(CommuneBase):
+    commune_id: int
