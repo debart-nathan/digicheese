@@ -1,4 +1,4 @@
-from .commande_model import Commande
+from .commande_model import Commande, CommandeCreate, CommandeUpdate, CommandeRead
 from .detail_commande_model import DetailCommande
 from .client_model import Client, ClientCreate, ClientUpdate, ClientRead
 from .commune_model import Commune, CommuneCreate, CommuneUpdate, CommuneRead
