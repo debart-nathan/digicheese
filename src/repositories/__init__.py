@@ -1,5 +1,5 @@
 from .commande_repository import CommandeRepository
-#from .client_repository import ClientRepository
+from .client_repository import ClientRepository
 #from .colis_repository import ColisRepository
 #from .commune_repository import CommuneRepository
 #from .departement_repository import DepartementRepository
