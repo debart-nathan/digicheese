@@ -1,4 +1,3 @@
-from typing import Optional
 from sqlmodel import SQLModel, Field
 
 class DetailColis(SQLModel, table=True):
@@ -14,11 +13,11 @@ class DetailColis(SQLModel, table=True):
     
     __tablename__ = "t_detail_colis"
     
-    detail_colis_id: Optional[int] = Field(default=None, primary_key=True) 
-    fk_detail_commande_id: Optional[int] = Field(default=None, foreign_key="t_detail_commandes.detail_commande_id", index=True, nullable=True)
-    fk_colis_id: Optional[int] = Field(default=None, foreign_key="t_colis.colis_id", index=True, nullable=True)
+    detail_colis_id: int|None = Field(default=None, primary_key=True) 
+    fk_detail_commande_id: int | None = Field(default=None, foreign_key="t_detail_commandes.detail_commande_id", index=True, nullable=True)
+    fk_colis_id: int | None = Field(default=None, foreign_key="t_colis.colis_id", index=True, nullable=True)
     detail_colis_quantitee: int = Field(default=1)
-    detail_colis_commentaire: Optional[str] = Field(default=None, max_length=100)
+    detail_colis_commentaire: str | None = Field(default=None, max_length=100)
 
 
 class DetailColisBase(SQLModel):
@@ -31,10 +30,10 @@ class DetailColisBase(SQLModel):
         detail_colis_commentaire (str | None): Commentaires ou détails supplémentaires sur le colis (facultatif).
     """
     
-    fk_detail_commande_id: Optional[int] = None
-    fk_colis_id: Optional[int] = None
+    fk_detail_commande_id: int | None = None
+    fk_colis_id: int | None = None
     detail_colis_quantitee: int
-    detail_colis_commentaire: Optional[str] = None
+    detail_colis_commentaire: str | None = None
 
 
 class DetailColisCreate(DetailColisBase):
@@ -59,10 +58,10 @@ class DetailColisUpdate(SQLModel):
         detail_colis_commentaire (str | None): Commentaires ou détails supplémentaires sur le colis (facultatif).
     """
     
-    fk_detail_commande_id: Optional[int] = None
-    fk_colis_id: Optional[int] = None
-    detail_colis_quantitee: Optional[int] = None
-    detail_colis_commentaire: Optional[str] = None
+    fk_detail_commande_id: int | None = None
+    fk_colis_id: int | None = None
+    detail_colis_quantitee: int | None = None
+    detail_colis_commentaire: str | None = None
 
 
 class DetailColisRead(DetailColisBase):
