@@ -21,7 +21,7 @@ def post_client(client: ClientCreate, session: Session= Depends(get_db)):
     return created_client
 
 
-@router.patch("/{id}")
+@router.patch("/{id}", response_model=ClientRead)
 def patch_client(id:int, client: ClientUpdate, session: Session= Depends(get_db)):
     created_client = ClientRepository(session).update_client(id,**client.model_dump(exclude_unset=True))
     return created_client
