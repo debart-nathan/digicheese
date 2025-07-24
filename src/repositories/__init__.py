@@ -4,4 +4,4 @@ from .commande_repository import CommandeRepository
 #from .commune_repository import CommuneRepository
 #from .departement_repository import DepartementRepository
 #from .detail_colis_repository import DetailColisRepository
-#from .detail_commande_repository import DetailCommandeRepository
+from .detail_commande_repository import DetailCommandeRepository
