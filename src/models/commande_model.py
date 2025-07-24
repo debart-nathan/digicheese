@@ -1,7 +1,7 @@
 from sqlmodel import SQLModel, Field
 from datetime import date
 
-class CommandeBase(SQLModel, table=True):
+class CommandeBase(SQLModel):
     commande_date: date | None = Field(default=None, nullable=True)
     fk_client_id: int | None = Field(default=None, foreign_key="t_clients.client_id", nullable=True)
     client_timbre: float | None = Field(default=None, nullable=True) #value of the timbre send by the client
