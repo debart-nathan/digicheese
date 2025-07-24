@@ -13,9 +13,9 @@ class Colis(SQLModel, table=True):
     __tablename__ = "t_colis"
     
     colis_id: int | None = Field(default=None, primary_key=True) 
-    colis_code_suivi: str | None = Field(default=None, max_length=100, nullable=True)
-    colis_timbre: float | None = Field(default=None, nullable=True)  # Value of the postage needed for the package
-    detail_colis_commentaire: str | None = Field(default=None, max_length=100, nullable=True)
+    colis_code_suivi: str | None = Field(default="", max_length=100, nullable=True)
+    colis_timbre: float | None = Field(default="", nullable=True)  # Value of the postage needed for the package
+    detail_colis_commentaire: str | None = Field(default="", max_length=100, nullable=True)
 
 
 class ColisBase(SQLModel):
@@ -27,9 +27,9 @@ class ColisBase(SQLModel):
         detail_colis_commentaire (str): Comments or details about the package (required).
     """
     
-    colis_code_suivi: str
-    colis_timbre: float    
-    detail_colis_commentaire: str
+    colis_code_suivi: str | None = None
+    colis_timbre: float | None = None
+    detail_colis_commentaire: str | None = None
 
 
 class ColisCreate(ColisBase):
