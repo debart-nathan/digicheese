@@ -5,3 +5,5 @@ from .commune_model import Commune, CommuneCreate, CommuneUpdate, CommuneRead
 from .departement_model import Departement, DepartementCreate, DepartementUpdate, DepartementRead
 from .colis_model import Colis , ColisCreate, ColisRead, ColisUpdate
 from .detail_colis_model import DetailColis, DetailColisCreate , DetailColisRead, DetailColisUpdate
+from .objet_model import Objet, ObjetCreate, ObjetUpdate, ObjetRead
+from .variation_objet_model import VariationObjet, VariationObjetCreate, VariationObjetUpdate, VariationObjetRead

@@ -11,11 +11,11 @@ class VariationObjetRepository:
         self.session.refresh(variation_objet)
         return variation_objet
 
-    def get_variation_objet(self, variation_objet_code: int) -> VariationObjet | None:
-        statement = select(VariationObjet).where(VariationObjet.variation_objet_code == variation_objet_code)
+    def get_variation_objet(self, variation_objet_id: int) -> VariationObjet | None:
+        statement = select(VariationObjet).where(VariationObjet.variation_objet_id == variation_objet_id)
         return self.session.exec(statement).one_or_none()
 
-    def get_all_variation_objet(self,limit: int | None = None, offset: int | None = None ) -> list[VariationObjet]:
+    def get_all_variation_objets(self,limit: int | None = None, offset: int | None = None ) -> list[VariationObjet]:
         statement = select(VariationObjet).limit(limit).offset(offset)
         return list(self.session.exec(statement).all())
 
