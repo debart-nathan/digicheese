@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 import datetime
+from .client_model import Client
 
 class CommandeBase(SQLModel):
     commande_date: datetime.date | None = Field(default=None, nullable=True)
@@ -14,7 +15,8 @@ class Commande(CommandeBase, table=True):
     __tablename__ = "t_commandes"
 
     commande_id: int | None = Field(default=None, primary_key=True)
-    details_commandes: list["DetailCommande"] = Relationship(back_populates="commande")
+    client: Client = Relationship(back_populates="commandes")
+    details_commande: list["DetailCommande"] = Relationship(back_populates="commande")
 
 class CommandeCreate(CommandeBase):
     pass

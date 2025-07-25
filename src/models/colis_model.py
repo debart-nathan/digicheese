@@ -26,7 +26,7 @@ class Colis(ColisBase, table=True):
     __tablename__ = "t_colis"
     
     colis_id: int | None = Field(default=None, primary_key=True) 
-    detail_colis: list["DetailColis"] = Relationship(back_populates="colis")
+    details_colis: list["DetailColis"] = Relationship(back_populates="colis")
 
 
 

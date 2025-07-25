@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field, Relationship
+
 from .departement_model import Departement
 
 
