@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, HTTPException, status
 from sqlmodel import SQLModel, select, Session
 
 from .database import get_db, engine
@@ -27,4 +27,8 @@ SQLModel.metadata.create_all(bind=engine)
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+@app.get("/coffee")
+def read_cofee():
+    raise HTTPException(status_code=status.HTTP_418_IM_A_TEAPOT)
