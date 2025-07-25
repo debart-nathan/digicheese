@@ -17,4 +17,4 @@ class ObjetUpdate(ObjetBase):
     objet_points: int | None = Field(default=0,nullable=True)
 
 class ObjetRead(ObjetBase):
-    variation_objet_id: int | None = Field(default=None, primary_key=True)
+    objet_id: int | None = Field(default=None, primary_key=True)

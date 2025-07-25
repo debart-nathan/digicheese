@@ -6,3 +6,4 @@ from .departement_router import router as router_departement
 from .detail_colis_router import router as router_detail_colis
 from .detail_commande_router import router as router_detail_commande
 from .objet_router import router as router_objet
+from .variation_objet_router import router as router_variation_objet

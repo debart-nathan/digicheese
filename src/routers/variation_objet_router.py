@@ -7,7 +7,7 @@ from ..repositories import VariationObjetRepository
 router = APIRouter(prefix="/variation_objet",tags=['VariationObjet'])
 
 @router.get("/", response_model=list[VariationObjetRead])
-def get_all_variation_objet(offset: int = 0, limit: int = Query(default=100, le=100),session: Session= Depends(get_db))->list[VariationObjet]:
+def get_all_variation_objets(offset: int = 0, limit: int = Query(default=100, le=100),session: Session= Depends(get_db))->list[VariationObjet]:
     return VariationObjetRepository(session).get_all_variation_objets(limit,offset)
 
 @router.get("/{id}", response_model=VariationObjetRead )

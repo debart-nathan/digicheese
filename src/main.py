@@ -12,6 +12,7 @@ from .routers import (
     router_departement,
     router_detail_commande,
     router_objet,
+    router_variation_objet
 )
 
 app = FastAPI()
@@ -26,6 +27,7 @@ routers = [
     router_departement,
     router_detail_commande,
     router_objet,
+    router_variation_objet
 ]
 
 for router in routers:
