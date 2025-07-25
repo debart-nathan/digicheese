@@ -5,3 +5,4 @@ from .departement_repository import DepartementRepository
 from .commune_repository import CommuneRepository
 from .detail_colis_repository import DetailColisRepository
 from .detail_commande_repository import DetailCommandeRepository
+from .objet_repository import ObjetRepository
