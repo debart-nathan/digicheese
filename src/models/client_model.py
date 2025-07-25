@@ -1,4 +1,5 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field,Relationship
+from .commune_model import Commune
 
 
 class ClientBase(SQLModel):
@@ -20,6 +21,8 @@ class Client(ClientBase, table=True):
     __tablename__ = "t_clients"
     
     client_id: int | None = Field(default=None, primary_key=True)
+    commandes: list["Commande"] = Relationship(back_populates="client")
+    commune: Commune = Relationship(back_populates="clients")
 
 
 class ClientCreate(ClientBase):

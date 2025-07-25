@@ -7,7 +7,7 @@ class ObjetBase(SQLModel):
 class Objet(ObjetBase, table=True):
     __tablename__ = "t_objet"
     objet_id: int | None = Field(default=None, primary_key=True)
-    variations: list["VariationObjet"] = Relationship(back_populates="objet")
+    variations_objet: list["VariationObjet"] = Relationship(back_populates="objet")
 
 
 class ObjetCreate(ObjetBase):

@@ -1,4 +1,6 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+from .colis_model import   Colis
+from .detail_commande_model import DetailCommande
 
 class DetailColisBase(SQLModel):
     """Base class for creating and reading detail colis data.
@@ -14,6 +16,8 @@ class DetailColisBase(SQLModel):
     detail_colis_quantitee: int = Field(default=1)
     detail_colis_commentaire: str | None = Field(default=None, max_length=100)
 
+    detail_commande: DetailCommande = Relationship(back_populates="detail_colis")
+    colis: Colis = Relationship(back_populates="detail_colis")
 
 class DetailColis(SQLModel, table=True):
     """Table représentant les détails des colis.
