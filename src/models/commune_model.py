@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field, Relationship
+
 from .departement_model import Departement
 
 
@@ -15,6 +16,7 @@ class Commune(CommuneBase, table=True):
 
     commune_id: int | None = Field(default=None, primary_key=True)
     departement: Departement | None = Relationship(back_populates="communes")
+    clients: list["Client"] = Relationship(back_populates="commune")
 
 
 class CommuneCreate(CommuneBase):

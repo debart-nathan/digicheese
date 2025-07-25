@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 
 class ColisBase(SQLModel):
     """Base class for creating and reading package data.
@@ -11,7 +11,7 @@ class ColisBase(SQLModel):
     
     colis_code_suivi: str | None = Field(default=None, max_length=100, nullable=True)
     colis_timbre: float | None = Field(default=None, nullable=True)  # Value of the postage needed for the package
-    detail_colis_commentaire: str | None = Field(default=None, max_length=100, nullable=True)
+    colis_commentaire: str | None = Field(default=None, max_length=100, nullable=True)
 
 class Colis(ColisBase, table=True):
     """Table representing packages (colis) in the database.
@@ -26,6 +26,7 @@ class Colis(ColisBase, table=True):
     __tablename__ = "t_colis"
     
     colis_id: int | None = Field(default=None, primary_key=True) 
+    details_colis: list["DetailColis"] = Relationship(back_populates="colis")
 
 
 

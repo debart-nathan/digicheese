@@ -1,4 +1,6 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+from .colis_model import   Colis
+from .detail_commande_model import DetailCommande
 
 class DetailColisBase(SQLModel):
     """Base class for creating and reading detail colis data.
@@ -9,13 +11,13 @@ class DetailColisBase(SQLModel):
         detail_colis_quantitee (int): La quantité d'articles dans le colis (obligatoire).
         detail_colis_commentaire (str | None): Commentaires ou détails supplémentaires sur le colis (facultatif).
     """
-    fk_detail_commande_id: int | None = Field(default=None, foreign_key="t_detail_commandes.detail_commande_id", index=True, nullable=True)
+    fk_detail_commande_id: int | None = Field(default=None, foreign_key="t_details_commandes.detail_commande_id", index=True, nullable=True)
     fk_colis_id: int | None = Field(default=None, foreign_key="t_colis.colis_id", index=True, nullable=True)
     detail_colis_quantitee: int = Field(default=1)
     detail_colis_commentaire: str | None = Field(default=None, max_length=100)
 
 
-class DetailColis(SQLModel, table=True):
+class DetailColis(DetailColisBase, table=True):
     """Table représentant les détails des colis.
     
     Attributes:
@@ -26,9 +28,12 @@ class DetailColis(SQLModel, table=True):
         detail_colis_commentaire (str | None): Commentaires ou détails supplémentaires sur le colis.
     """
     
-    __tablename__ = "t_detail_colis"
+    __tablename__ = "t_details_colis"
     
     detail_colis_id: int|None = Field(default=None, primary_key=True) 
+
+    detail_commande: DetailCommande = Relationship(back_populates="details_colis")
+    colis: Colis = Relationship(back_populates="details_colis")
 
 
 
