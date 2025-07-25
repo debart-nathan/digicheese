@@ -18,24 +18,6 @@ class Conditionnement(SQLModel, table=True):
     
     objets: List["ObjetCond"] = Relationship(back_populates="condit")
 
-class Objet(SQLModel, table=True):
-    """Table représentant les objets disponibles dans la fromagerie."""
-    
-    __tablename__ = "t_objet"
-    
-    codobj: int | None = Field(default=None, primary_key=True)
-    libobj: str | None = Field(default=None, max_length=50, nullable=True)
-    tailleobj: str | None = Field(default=None, max_length=50, nullable=True)
-    puobj: Decimal = Field(default=Decimal("0.0000"), nullable=False)
-    poidsobj: Decimal = Field(default=Decimal("0.0000"), nullable=False)
-    indispobj: int = Field(default=0)
-    o_imp: int = Field(default=0)
-    o_aff: int = Field(default=0)
-    o_cartp: int = Field(default=0)
-    points: int = Field(default=0)
-    o_ordre_aff: int = Field(default=0)
-    
-    condit: List["ObjetCond"] = Relationship(back_populates="objets")
 
 class ObjetCond(SQLModel, table=True):
     """Table représentant la relation entre les objets et les conditionnements."""
