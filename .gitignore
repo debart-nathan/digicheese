@@ -2,3 +2,4 @@
 annexes/
 .venv/
 .env
+test.db
