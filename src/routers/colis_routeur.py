@@ -3,6 +3,7 @@ from sqlmodel import Session
 from ..database import get_db
 from ..models import Colis, ColisCreate, ColisRead, ColisUpdate
 from ..repositories import ColisRepository
+from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/colis",tags=['Colis'])
 
@@ -12,7 +13,9 @@ def get_all_colis(offset: int = 0, limit: int = Query(default=100, le=100),sessi
 
 @router.get("/{id}", response_model=ColisRead )
 def get_colis(id:int,session: Session= Depends(get_db)):
-    return ColisRepository(session).get_colis(id)
+    colis=ColisRepository(session).get_colis(id)
+
+    return JSONResponse(content=colis, status_code=200)
 
 @router.post("/", response_model=ColisRead)
 def post_colis(colis: ColisCreate, session: Session = Depends(get_db)):
