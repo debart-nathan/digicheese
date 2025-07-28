@@ -19,10 +19,10 @@ class ObjetRepository:
         get_objet(objet_id: int) -> Objet | None:
             Retrieves a Objet by its ID. Returns None if not found.
 
-        get_all_objets() -> List[Objet]:
+        get_all_objets(limit: int | None = None, offset: int | None = Non) -> List[Objet]:
             Fetches all Objet records from the database.
 
-        update_objet(objet: Objet) -> Objet | None:
+        update_objet(objet_id: int, objet_update: dict) -> Objet | None:
             Updates an existing Objet with new values. Returns the updated instance
             or None if the Objet was not found.
 
@@ -66,11 +66,15 @@ class ObjetRepository:
         statement = select(Objet).where(Objet.objet_id == objet_id)
         return self.session.exec(statement).one_or_none()
 
-    def get_all_objets(self,limit: int | None = None, offset: int | None = None ) -> list[Objet]:
+    def get_all_objets(self, limit: int | None = None, offset: int | None = None) -> list[Objet]:
         """
         Retrieve all Objets.
 
         This method fetches all Objet records from the database.
+        
+        Parameters:
+            limit (int) : an integer to specify the maximum number of results.
+            offset (int) : an integer to specify the number of lines to ignore.
 
         Returns:
             List[Objet]: A list of all Objet instances in the database.
@@ -78,7 +82,7 @@ class ObjetRepository:
         statement = select(Objet).limit(limit).offset(offset)
         return list(self.session.exec(statement).all())
 
-    def update_objet(self, objet_id: int ,objet_update: dict) -> Objet | None:
+    def update_objet(self, objet_id: int, objet_update: dict) -> Objet | None:
         """
         Update an existing Objet.
 
@@ -86,7 +90,8 @@ class ObjetRepository:
         with the values from the provided Objet instance.
 
         Parameters:
-            objet (Objet): The Objet instance containing updated values.
+            objet_id (int): The ID of the Objet to update.
+            objet_update (dict): The dictionary instance containing updated values.
 
         Returns:
             Objet | None: The updated Objet instance if found, otherwise None.

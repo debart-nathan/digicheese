@@ -19,10 +19,10 @@ class DetailColisRepository:
         get_detail_colis(detail_colis_id: int) -> DetailColis | None:
             Retrieves a DetailColis by its ID. Returns None if not found.
 
-        get_all_detail_coliss() -> List[DetailColis]:
+        get_all_detail_colis(imit: int | None = None, offset: int | None = None) -> List[DetailColis]:
             Fetches all DetailColis records from the database.
 
-        update_detail_colis(detail_colis: DetailColis) -> DetailColis | None:
+        update_detail_colis(ddetail_colis_id: int, detail_colis_update: dict) -> DetailColis | None:
             Updates an existing DetailColis with new values. Returns the updated instance
             or None if the DetailColis was not found.
 
@@ -66,11 +66,16 @@ class DetailColisRepository:
         statement = select(DetailColis).where(DetailColis.detail_colis_id == detail_colis_id)
         return self.session.exec(statement).one_or_none()
 
-    def get_all_detail_colis(self,limit: int | None = None, offset: int | None = None ) -> list[DetailColis]:
+    def get_all_detail_colis(self, limit: int | None = None, offset: int | None = None) -> list[DetailColis]:
         """
         Retrieve all DetailColiss.
 
         This method fetches all DetailColis records from the database.
+
+        Parameters:
+            limit (int) : an integer to specify the maximum number of results.
+            offset (int) : an integer to specify the number of lines to ignore.
+
 
         Returns:
             List[DetailColis]: A list of all DetailColis instances in the database.
@@ -78,7 +83,7 @@ class DetailColisRepository:
         statement = select(DetailColis).limit(limit).offset(offset)
         return list(self.session.exec(statement).all())
 
-    def update_detail_colis(self, detail_colis_id: int ,detail_colis_update: dict) -> DetailColis | None:
+    def update_detail_colis(self, detail_colis_id: int, detail_colis_update: dict) -> DetailColis | None:
         """
         Update an existing DetailColis.
 
@@ -86,7 +91,8 @@ class DetailColisRepository:
         with the values from the provided DetailColis instance.
 
         Parameters:
-            detail_colis (DetailColis): The DetailColis instance containing updated values.
+            detail_colis_id (int): The ID of the DetailColis to update.
+            detail_colis_update (dict): The dictionary instance containing updated values.
 
         Returns:
             DetailColis | None: The updated DetailColis instance if found, otherwise None.
