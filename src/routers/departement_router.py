@@ -3,7 +3,7 @@ from sqlmodel import Session
 from ..database import get_db
 from ..models import Departement, DepartementCreate, DepartementRead, DepartementUpdate
 from .. repositories import DepartementRepository
-from fastapi.responses import JSONResponse
+
 
 router = APIRouter(prefix="/departement",tags=['Departement'])
 

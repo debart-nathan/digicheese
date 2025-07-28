@@ -3,7 +3,6 @@ from sqlmodel import Session
 from ..database import get_db
 from ..models import Colis, ColisCreate, ColisRead, ColisUpdate
 from ..repositories import ColisRepository
-from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/colis",tags=['Colis'])
 

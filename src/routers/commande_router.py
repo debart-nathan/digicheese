@@ -3,7 +3,7 @@ from sqlmodel import Session
 from ..database import get_db
 from ..models import Commande, CommandeCreate, CommandeRead, CommandeUpdate
 from ..repositories import CommandeRepository
-from fastapi.responses import JSONResponse
+
 
 router = APIRouter(prefix="/commande",tags=['Commande'])
 
