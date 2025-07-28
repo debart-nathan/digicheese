@@ -19,10 +19,10 @@ class CommandeRepository:
         get_commande(commande_id: int) -> Commande | None:
             Retrieves a Commande by its ID. Returns None if not found.
 
-        get_all_commandes() -> List[Commande]:
+        get_all_commandes(limit: int | None = None, offset: int | None = None) -> List[Commande]:
             Fetches all Commande records from the database.
 
-        update_commande(commande: Commande) -> Commande | None:
+        update_commande(commande_id: int, commande_update: dict) -> Commande | None:
             Updates an existing Commande with new values. Returns the updated instance
             or None if the Commande was not found.
 
@@ -66,11 +66,15 @@ class CommandeRepository:
         statement = select(Commande).where(Commande.commande_id == commande_id)
         return self.session.exec(statement).one_or_none()
 
-    def get_all_commandes(self,limit: int | None = None, offset: int | None = None ) -> list[Commande]:
+    def get_all_commandes(self, limit: int | None = None, offset: int | None = None) -> list[Commande]:
         """
         Retrieve all Commandes.
 
         This method fetches all Commande records from the database.
+
+        Parameters:
+            limit (int) : an integer to specify the maximum number of results.
+            offset (int) : an integer to specify the number of lines to ignore.
 
         Returns:
             List[Commande]: A list of all Commande instances in the database.
@@ -78,7 +82,7 @@ class CommandeRepository:
         statement = select(Commande).limit(limit).offset(offset)
         return list(self.session.exec(statement).all())
 
-    def update_commande(self, commande_id: int ,commande_update: dict) -> Commande | None:
+    def update_commande(self, commande_id: int, commande_update: dict) -> Commande | None:
         """
         Update an existing Commande.
 
@@ -86,7 +90,8 @@ class CommandeRepository:
         with the values from the provided Commande instance.
 
         Parameters:
-            commande (Commande): The Commande instance containing updated values.
+            commande_id (int): The ID of the Commande to update.
+            commande_update (dict): The dictionary instance containing updated values.
 
         Returns:
             Commande | None: The updated Commande instance if found, otherwise None.
