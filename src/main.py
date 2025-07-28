@@ -40,6 +40,6 @@ def read_root():
     return {"message": "Welcome to the API! Visit /docs for documentation."}
 
 
-@app.get("/coffee")
-def read_cofee():
+@app.get("/coffee",status_code=status.HTTP_418_IM_A_TEAPOT)
+def read_coffee():
     raise HTTPException(status_code=status.HTTP_418_IM_A_TEAPOT, detail="I'm a teapot!")
