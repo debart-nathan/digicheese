@@ -37,7 +37,7 @@ def get_commune(id: int, session: Session = Depends(get_db)):
     Raises:
     - HTTPException 404: If commune is not found
     """
-    commune = CommuneRepository(session).get_commande(id)
+    commune = CommuneRepository(session).get_commune(id)
     if not commune:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"commune :{id} non trouvé")
     return commune
