@@ -79,7 +79,9 @@ def patch_colis(id: int, colis: ColisUpdate, session: Session = Depends(get_db))
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"colis :{id} non trouvé")
     return created_colis
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT, responses={
+    404: {"description": "package is not found"},
+})
 def delete_colis(id: int, session: Session = Depends(get_db)):
     """
     Delete a package (colis) by ID.
@@ -96,6 +98,6 @@ def delete_colis(id: int, session: Session = Depends(get_db)):
     
     """
     colis = ColisRepository(session).delete_colis(id)
-    if not Colis:  # Note: This appears to be checking the class rather than the instance
+    if not colis:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"colis:{id} non trouvé")
     return ColisRepository(session).delete_colis(id)

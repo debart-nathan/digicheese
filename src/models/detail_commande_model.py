@@ -1,6 +1,9 @@
 from sqlmodel import SQLModel, Field, Relationship
 from .variation_objet_model import VariationObjet
 from .commande_model import Commande
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .detail_commande_model import DetailCommande
 
 class DetailCommandeBase(SQLModel):
     """
@@ -58,6 +61,10 @@ class DetailCommande(DetailCommandeBase, table=True):
 
     variation_objet: VariationObjet = Relationship(
         back_populates="details_commandes"
+    )
+
+    details_colis: list["DetailColis"] = Relationship(
+        back_populates="detail_commande"
     )
 
 
