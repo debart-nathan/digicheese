@@ -37,15 +37,14 @@ def get_departement(id: int, session: Session = Depends(get_db)):
     Raises:
     - HTTPException 404: If department is not found
     
-    Note: The method get_commande() appears to be misnamed (should likely be get_departement())
     """
-    departement = DepartementRepository(session).get_commande(id)
+    departement = DepartementRepository(session).get_departement(id)
     if not departement:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"departement :{id} non trouvé")
     return departement
 
 @router.post("/", response_model=DepartementRead, status_code=status.HTTP_201_CREATED)
-def post_departement(departement = DepartementUpdate, session: Session = Depends(get_db)):
+def post_departement(departement: DepartementUpdate, session: Session = Depends(get_db)):
     """
     Create a new department.
     
@@ -56,15 +55,13 @@ def post_departement(departement = DepartementUpdate, session: Session = Depends
     Returns:
     - DepartementRead: The created department object
     
-    Note: The parameter type hint appears to use '=' instead of ':' and uses DepartementUpdate
-    instead of DepartementCreate which might be more appropriate for creation
     """
     departement_instance = Departement.model_validate(departement)
     created_departement = DepartementRepository(session).create_departement(departement_instance)
     return created_departement
 
 @router.patch("/{id}", response_model=DepartementRead)
-def patch_departement(id: int, departement = DepartementUpdate, session: Session = Depends(get_db)):
+def patch_departement(id: int, departement : DepartementUpdate, session: Session = Depends(get_db)):
     """
     Partially update a department's information.
     
@@ -79,7 +76,6 @@ def patch_departement(id: int, departement = DepartementUpdate, session: Session
     Raises:
     - HTTPException 404: If department is not found
     
-    Note: The parameter type hint appears to use '=' instead of ':'
     """
     created_departement = DepartementRepository(session).update_departement(id, **departement.model_dump(exclude_unset=True))
     if not created_departement:
@@ -101,7 +97,6 @@ def delete_departement(id: int, session: Session = Depends(get_db)):
     Raises:
     - HTTPException 404: If department is not found
     
-    Note: The original implementation calls delete_departement() twice
     """
     departement = DepartementRepository(session).delete_departement(id)
     if not departement:

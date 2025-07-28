@@ -58,7 +58,7 @@ def post_detail_colis(detail_colis: DetailColisCreate, session: Session = Depend
     created_detail_colis = DetailColisRepository(session).create_detail_colis(detail_colis_instance)
     return created_detail_colis
 
-@router.patch("/{id}")
+@router.patch("/{id}", response_model=DetailColisRead)
 def patch_detail_colis(id: int, detail_colis: DetailColisUpdate, session: Session = Depends(get_db)):
     """
     Partially update a package detail's information.
@@ -74,7 +74,6 @@ def patch_detail_colis(id: int, detail_colis: DetailColisUpdate, session: Sessio
     Raises:
     - HTTPException 404: If package detail is not found
     
-    Note: The response_model is not specified in the decorator, which may cause inconsistent response documentation
     """
     created_detail_colis = DetailColisRepository(session).update_detail_colis(id, **detail_colis.model_dump(exclude_unset=True))
     if not created_detail_colis:
@@ -96,8 +95,6 @@ def delete_detail_colis(id: int, session: Session = Depends(get_db)):
     Raises:
     - HTTPException 404: If package detail is not found
     
-    Note: The implementation returns a JSON response despite using status_code 204 (No Content),
-    which is inconsistent. Typically, 204 responses should have no body.
     """
     result: bool = DetailColisRepository(session).delete_detail_colis(id)
     if not result:
