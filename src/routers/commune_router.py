@@ -3,7 +3,6 @@ from sqlmodel import Session
 from ..database import get_db
 from ..models import Commune, CommuneCreate, CommuneRead, CommuneUpdate
 from ..repositories import CommuneRepository
-from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/commune",tags=['Commune'])
 
@@ -35,7 +34,7 @@ def patch_commune(id:int,commune:CommuneUpdate,session: Session= Depends(get_db)
 
 @router.delete("/{id}",status_code=status.HTTP_204_NO_CONTENT)
 def delete_commune(id:int,session: Session= Depends(get_db)):
-    return CommuneRepository(session).delete_commune(id)
+    commune=CommuneRepository(session).delete_commune(id)
     if not commune:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"commune:{id} non trouvé")
     return commune
