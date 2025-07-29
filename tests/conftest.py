@@ -2,6 +2,7 @@
 # Modules import #
 ##################
 
+from decimal import Decimal
 import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import create_engine, Session, SQLModel
@@ -18,6 +19,7 @@ from src.models.departement_model import Departement
 from src.models.objet_model import Objet
 from src.models.colis_model import Colis
 from src.models.commande_model import Commande
+from src.models.variation_objet_model import VariationObjet
 
 ############
 # Fixtures #
@@ -27,19 +29,19 @@ from src.models.commande_model import Commande
 def test_session():
     """
     Crée une base de données SQLite en fichier pour vérifier.
-    Initialise les tables et insère des données par défaut, incluant un Objet.
+    Initialise les tables et insère des données par défaut, incluant un Objet et une VariationObjet.
     """
     db_url = "sqlite:///./test.db"
     engine = create_engine(db_url, echo=False, connect_args={"check_same_thread": False})
     SQLModel.metadata.drop_all(engine)
     SQLModel.metadata.create_all(engine)
-    
+
     with Session(engine) as session:
         # Création des clients
         robin = ClientModel(client_prenom="Robin", client_nom="HOTTON", client_adresse1="1 rue de la Paix")
         daniel = ClientModel(client_prenom="Daniel", client_nom="HOTTON", client_adresse1="2 rue de la Paix")
         session.add_all([robin, daniel])
-        
+
         # Création de la commune et du département
         wervicq = Commune(commune_ville="Wervicq-Sud", commune_codepostal="59117")
         nord = Departement(departement_nom="Nord", departement_code="59")
@@ -47,18 +49,13 @@ def test_session():
         session.add_all([wervicq, nord])
         session.add(var)
 
-        #Création d'un colis
-        colis = Colis(colis_code_suivi = "1445", colis_timbre = "14.5", colis_commentaire = "Bien envoyé")
+        # Création d'un colis
+        colis = Colis(colis_code_suivi="1445", colis_timbre=14.5, colis_commentaire="Bien envoyé")
         session.add(colis)
 
         #Création d'un commande
         commande = Commande(client_timbre = "14.5", commande_timbre = "14.5", client_cheque = "20", commande_commentaire = "Appeller le client")
         session.add(commande)
-
-        # Associations
-        robin.commune = wervicq
-        daniel.commune = wervicq
-        wervicq.departement = nord
         commande.client = robin
 
         # Création d'un objet
@@ -66,10 +63,30 @@ def test_session():
             objet_libelee="Épée magique",
             objet_points=50
         )
-        session.add(magic_sword)
 
+        magic_staff = Objet(
+            objet_libelee="Baton magique",
+            objet_points=30
+        )
+        session.add_all([magic_sword,magic_staff])
+
+        # Création d'une variation pour l'objet
+        variation = VariationObjet(
+            variation_objet_taille="Moyen",
+            variation_objet_poids=Decimal("1.2500")
+        )
+        session.add(variation)
+
+        # Associations
+        robin.commune = wervicq
+        daniel.commune = wervicq
+        wervicq.departement = nord
+        variation.objet = magic_staff
+
+        session.flush()
         session.commit()
         yield session
+
 
 
 @pytest.fixture(scope="function")

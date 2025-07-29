@@ -80,7 +80,7 @@ def patch_variation_objet(id: int, variation_objet: VariationObjetUpdate, sessio
     - HTTPException 404: If object variation is not found
     
     """
-    created_variation_objet = VariationObjetRepository(session).update_variation_objet(id, **variation_objet.model_dump(exclude_unset=True))
+    created_variation_objet = VariationObjetRepository(session).update_variation_objet(id, variation_objet.model_dump(exclude_unset=True))
     if not created_variation_objet:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Variation objet: {id} non trouvé")
     return created_variation_objet
