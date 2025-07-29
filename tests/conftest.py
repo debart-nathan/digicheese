@@ -15,6 +15,7 @@ from src.database import get_db
 from src.models.client_model import Client as ClientModel
 from src.models.commune_model import Commune
 from src.models.departement_model import Departement
+from src.models.colis_model import Colis
 
 ############
 # Fixtures #
@@ -45,6 +46,10 @@ def test_session():
         var = Departement(departement_nom="Var", departement_code="83")
         session.add(nord)
         session.add(var)
+
+        #Création d'un colis
+        colis = Colis(colis_code_suivi = "1445", colis_timbre = "14.5", colis_commentaire = "Bien envoyé")
+        session.add(colis)
         
         # Association des entités
         robin.commune = wervicq
