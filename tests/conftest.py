@@ -20,6 +20,7 @@ from src.models.objet_model import Objet
 from src.models.colis_model import Colis
 from src.models.commande_model import Commande
 from src.models.variation_objet_model import VariationObjet
+from src.models.detail_colis_model import DetailColis
 
 ############
 # Fixtures #
@@ -56,7 +57,7 @@ def test_session():
         #Création d'un commande
         commande = Commande(client_timbre = "14.5", commande_timbre = "14.5", client_cheque = "20", commande_commentaire = "Appeller le client")
         session.add(commande)
-        commande.client = robin
+        
 
         # Création d'un objet
         magic_sword = Objet(
@@ -77,11 +78,17 @@ def test_session():
         )
         session.add(variation)
 
+        #Création d'un détail de colis
+        detail_colis = DetailColis(detail_colis_quantitee = 4, detail_colis_commentaire = "Une simple commande")
+        session.add(detail_colis)
+
         # Associations
         robin.commune = wervicq
         daniel.commune = wervicq
         wervicq.departement = nord
         variation.objet = magic_staff
+        commande.client = robin
+        detail_colis.colis = colis
 
         session.flush()
         session.commit()

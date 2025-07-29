@@ -81,7 +81,7 @@ def patch_detail_colis(id: int, detail_colis: DetailColisUpdate, session: Sessio
     - HTTPException 404: If package detail is not found
     
     """
-    created_detail_colis = DetailColisRepository(session).update_detail_colis(id, **detail_colis.model_dump(exclude_unset=True))
+    created_detail_colis = DetailColisRepository(session).update_detail_colis(id, detail_colis.model_dump(exclude_unset=True))
     if not created_detail_colis:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Detail Colis: {id} non trouvé")
     return created_detail_colis
