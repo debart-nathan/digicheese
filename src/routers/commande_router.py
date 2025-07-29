@@ -22,7 +22,9 @@ def get_all_commande(offset: int = 0, limit: int = Query(default=100, le=100), s
     """
     return CommandeRepository(session).get_all_commandes(limit, offset)
 
-@router.get("/{id}", response_model=CommandeRead)
+@router.get("/{id}", response_model=CommandeRead,responses={
+    "404":{"description":"Commande id non trouvé"}
+})
 def get_commande(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific order by ID.
@@ -58,7 +60,9 @@ def post_commande(commande: CommandeCreate, session: Session = Depends(get_db)):
     created_commande = CommandeRepository(session).create_commande(commande_instance)
     return created_commande
 
-@router.patch("/{id}", response_model=CommandeRead)
+@router.patch("/{id}", response_model=CommandeRead,responses={
+    404:{"description":"Commande id non trouvé"}
+})
 def patch_commande(id: int, commande: CommandeUpdate, session: Session = Depends(get_db)):
     """
     Partially update an order's information.
@@ -79,7 +83,9 @@ def patch_commande(id: int, commande: CommandeUpdate, session: Session = Depends
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"commande :{id} non trouvé")
     return created_commande
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT,responses={
+    404:{"description":"Commande id non trouvé"}
+})
 def delete_commande(id: int, session: Session = Depends(get_db)):
     """
     Delete an order by ID.

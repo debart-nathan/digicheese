@@ -22,7 +22,9 @@ def get_all_detail_colis(offset: int = 0, limit: int = Query(default=100, le=100
     """
     return DetailColisRepository(session).get_all_detail_colis(limit, offset)
 
-@router.get("/{id}", response_model=DetailColisRead)
+@router.get("/{id}", response_model=DetailColisRead,responses={
+    404:{"description":"Colis detail id non trouvé"}
+})
 def get_detail_colis(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific package detail by ID.
@@ -42,7 +44,9 @@ def get_detail_colis(id: int, session: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Detail Colis: {id} non trouvé")
     return detail_colis
 
-@router.post("/", response_model=DetailColisRead, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=DetailColisRead, status_code=status.HTTP_201_CREATED,responses={
+    404:{"description":"Colis detail id non trouvé"}
+})
 def post_detail_colis(detail_colis: DetailColisCreate, session: Session = Depends(get_db)):
     """
     Create a new package detail.
@@ -58,7 +62,9 @@ def post_detail_colis(detail_colis: DetailColisCreate, session: Session = Depend
     created_detail_colis = DetailColisRepository(session).create_detail_colis(detail_colis_instance)
     return created_detail_colis
 
-@router.patch("/{id}", response_model=DetailColisRead)
+@router.patch("/{id}", response_model=DetailColisRead,responses={
+    404:{"description":"Colis detail id non trouvé"}
+})
 def patch_detail_colis(id: int, detail_colis: DetailColisUpdate, session: Session = Depends(get_db)):
     """
     Partially update a package detail's information.
@@ -80,7 +86,9 @@ def patch_detail_colis(id: int, detail_colis: DetailColisUpdate, session: Sessio
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Detail Colis: {id} non trouvé")
     return created_detail_colis
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT,responses={
+    404:{"description":"Colis detail id non trouvé"}
+})
 def delete_detail_colis(id: int, session: Session = Depends(get_db)):
     """
     Delete a package detail by ID.

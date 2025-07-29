@@ -22,7 +22,9 @@ def get_all_colis(offset: int = 0, limit: int = Query(default=100, le=100), sess
     """
     return ColisRepository(session).get_all_colis(limit, offset)
 
-@router.get("/{id}", response_model=ColisRead)
+@router.get("/{id}", response_model=ColisRead, responses={
+    404: {"description":"Colis id non trouvé"}
+})
 def get_colis(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific package (colis) by ID.
@@ -58,7 +60,9 @@ def post_colis(colis: ColisCreate, session: Session = Depends(get_db)):
     created_colis = ColisRepository(session).create_colis(colis_instance)
     return created_colis
 
-@router.patch("/{id}", response_model=ColisRead)
+@router.patch("/{id}", response_model=ColisRead,responses={
+    404:{"description":"Colis id non trouvé"}
+})
 def patch_colis(id: int, colis: ColisUpdate, session: Session = Depends(get_db)):
     """
     Partially update a package's (colis) information.
