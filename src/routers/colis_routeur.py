@@ -78,7 +78,7 @@ def patch_colis(id: int, colis: ColisUpdate, session: Session = Depends(get_db))
     Raises:
     - HTTPException 404: If package is not found
     """
-    created_colis = ColisRepository(session).update_colis(id, **colis.model_dump(exclude_unset=True))
+    created_colis = ColisRepository(session).update_colis(id, colis.model_dump(exclude_unset=True))
     if not created_colis:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"colis :{id} non trouvé")
     return created_colis
