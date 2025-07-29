@@ -19,10 +19,10 @@ class DetailCommandeRepository:
         get_detail_commande(detail_commande_id: int) -> DetailCommande | None:
             Retrieves a DetailCommande by its ID. Returns None if not found.
 
-        get_all_detail_commandes() -> List[DetailCommande]:
+        get_all_detail_commandes(limit: int | None = None, offset: int | None = None) -> List[DetailCommande]:
             Fetches all DetailCommande records from the database.
 
-        update_detail_commande(detail_commande: DetailCommande) -> DetailCommande | None:
+        update_detail_commande(detail_commande_id: int, detail_commande_update: dict) -> DetailCommande | None:
             Updates an existing DetailCommande with new values. Returns the updated instance
             or None if the DetailCommande was not found.
 
@@ -66,11 +66,15 @@ class DetailCommandeRepository:
         statement = select(DetailCommande).where(DetailCommande.detail_commande_id == detail_commande_id)
         return self.session.exec(statement).one_or_none()
 
-    def get_all_detail_commandes(self,limit: int | None = None, offset: int | None = None ) -> list[DetailCommande]:
+    def get_all_detail_commandes(self, limit: int | None = None, offset: int | None = None) -> list[DetailCommande]:
         """
         Retrieve all DetailCommandes.
 
         This method fetches all DetailCommande records from the database.
+
+        Parameters:
+            limit (int) : an integer to specify the maximum number of results.
+            offset (int) : an integer to specify the number of lines to ignore.
 
         Returns:
             List[DetailCommande]: A list of all DetailCommande instances in the database.
@@ -78,7 +82,7 @@ class DetailCommandeRepository:
         statement = select(DetailCommande).limit(limit).offset(offset)
         return list(self.session.exec(statement).all())
 
-    def update_detail_commande(self, detail_commande_id: int ,detail_commande_update: dict) -> DetailCommande | None:
+    def update_detail_commande(self, detail_commande_id: int, detail_commande_update: dict) -> DetailCommande | None:
         """
         Update an existing DetailCommande.
 
@@ -86,7 +90,8 @@ class DetailCommandeRepository:
         with the values from the provided DetailCommande instance.
 
         Parameters:
-            detail_commande (DetailCommande): The DetailCommande instance containing updated values.
+            detail_commande_id (int): The ID of the DetailCommande to update.
+            detail_commande_update (dict): The dictionary instance containing updated values.
 
         Returns:
             DetailCommande | None: The updated DetailCommande instance if found, otherwise None.

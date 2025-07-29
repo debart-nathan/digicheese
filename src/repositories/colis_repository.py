@@ -19,10 +19,10 @@ class ColisRepository:
         get_colis(colis_id: int) -> Colis | None:
             Retrieves a Colis by its ID. Returns None if not found.
 
-        get_all_coliss() -> List[Colis]:
+        get_all_colis(limit: int | None = None, offset: int | None = None) -> List[Colis]:
             Fetches all Colis records from the database.
 
-        update_colis(colis: Colis) -> Colis | None:
+        update_colis(colis_id: int, colis_update: dict) -> Colis | None:
             Updates an existing Colis with new values. Returns the updated instance
             or None if the Colis was not found.
 
@@ -66,11 +66,15 @@ class ColisRepository:
         statement = select(Colis).where(Colis.colis_id == colis_id)
         return self.session.exec(statement).one_or_none()
 
-    def get_all_colis(self,limit: int | None = None, offset: int | None = None ) -> list[Colis]:
+    def get_all_colis(self, limit: int | None = None, offset: int | None = None) -> list[Colis]:
         """
         Retrieve all Coliss.
 
         This method fetches all Colis records from the database.
+
+        Parameters:
+            limit (int) : an integer to specify the maximum number of results.
+            offset (int) : an integer to specify the number of lines to ignore.
 
         Returns:
             List[Colis]: A list of all Colis instances in the database.
@@ -78,7 +82,7 @@ class ColisRepository:
         statement = select(Colis).limit(limit).offset(offset)
         return list(self.session.exec(statement).all())
 
-    def update_colis(self, colis_id: int ,colis_update: dict) -> Colis | None:
+    def update_colis(self, colis_id: int, colis_update: dict) -> Colis | None:
         """
         Update an existing Colis.
 
@@ -86,7 +90,8 @@ class ColisRepository:
         with the values from the provided Colis instance.
 
         Parameters:
-            colis (Colis): The Colis instance containing updated values.
+            colis_id (int): The ID of the Colis to update.
+            colis_update (dict): The dictionary instance containing updated values.
 
         Returns:
             Colis | None: The updated Colis instance if found, otherwise None.
