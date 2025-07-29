@@ -17,6 +17,7 @@ from src.models.commune_model import Commune
 from src.models.departement_model import Departement
 from src.models.objet_model import Objet
 from src.models.colis_model import Colis
+from src.models.commande_model import Commande
 
 ############
 # Fixtures #
@@ -50,10 +51,15 @@ def test_session():
         colis = Colis(colis_code_suivi = "1445", colis_timbre = "14.5", colis_commentaire = "Bien envoyé")
         session.add(colis)
 
+        #Création d'un commande
+        commande = Commande(client_timbre = "14.5", commande_timbre = "14.5", client_cheque = "20", commande_commentaire = "Appeller le client")
+        session.add(commande)
+
         # Associations
         robin.commune = wervicq
         daniel.commune = wervicq
         wervicq.departement = nord
+        commande.client = robin
 
         # Création d'un objet
         magic_sword = Objet(
