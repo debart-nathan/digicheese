@@ -22,7 +22,9 @@ def get_all_objet(offset: int = 0, limit: int = Query(default=100, le=100), sess
     """
     return ObjetRepository(session).get_all_objets(limit, offset)
 
-@router.get("/{id}", response_model=ObjetRead)
+@router.get("/{id}", response_model=ObjetRead,responses={
+    404:{"description":"Commande detail id non trouvé"}
+})
 def get_objet(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific object by ID.
@@ -58,7 +60,9 @@ def post_objet(objet: ObjetCreate, session: Session = Depends(get_db)):
     created_objet = ObjetRepository(session).create_objet(objet_instance)
     return created_objet
 
-@router.patch("/{id}", response_model=ObjetRead)
+@router.patch("/{id}", response_model=ObjetRead,responses={
+    404:{"description":"Commande detail id non trouvé"}
+})
 def patch_objet(id: int, objet: ObjetUpdate, session: Session = Depends(get_db)):
     """
     Partially update an object's information.
@@ -79,7 +83,9 @@ def patch_objet(id: int, objet: ObjetUpdate, session: Session = Depends(get_db))
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Objet: {id} non trouvé")
     return created_objet
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT,responses={
+    404:{"description":"Objet id non trouvé"}
+})
 def delete_objet(id: int, session: Session = Depends(get_db)):
     """
     Delete an object by ID.

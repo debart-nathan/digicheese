@@ -22,7 +22,9 @@ def get_all_clients(offset: int = 0, limit: int = Query(default=100, le=100), se
     """
     return ClientService(session).get_all(limit, offset)
 
-@router.get("/{id}", response_model=ClientRead)
+@router.get("/{id}", response_model=ClientRead, responses={
+    404:{"descripiton":"Client id non trouvé"}
+})
 def get_client(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific client by ID.
@@ -42,7 +44,9 @@ def get_client(id: int, session: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=f"client :{id} non trouvé")
     return client
 
-@router.post("/", response_model=ClientRead, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=ClientRead, status_code=status.HTTP_201_CREATED, responses={
+    400:{"description":["'nom' et 'prenom' sont requis","'email' mal formé"]},
+})
 def post_client(client: ClientCreate, session: Session = Depends(get_db)):
     """
     Create a new client.
@@ -63,7 +67,10 @@ def post_client(client: ClientCreate, session: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=e)
     return created_client
 
-@router.patch("/{id}", response_model=ClientRead)
+@router.patch("/{id}", response_model=ClientRead, responses={
+    400:{"description":"'email' mal formé"},
+    404:{"description":"Client id non trouvé"}
+})
 def patch_client(id: int, client: ClientUpdate, session: Session = Depends(get_db)):
     """
     Partially update a client's information.
@@ -88,7 +95,9 @@ def patch_client(id: int, client: ClientUpdate, session: Session = Depends(get_d
         raise HTTPException(status_code=404, detail=f"client :{id} non trouvé")
     return created_client
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT,responses={
+    404:{'description': "Client id non trouvé"}
+})
 def delete_client(id: int, session: Session = Depends(get_db)):
     """
     Delete a client by ID.
