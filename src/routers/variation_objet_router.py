@@ -61,7 +61,8 @@ def post_variation_objet(variation_objet: VariationObjetCreate, session: Session
     created_variation_objet = VariationObjetRepository(session).create_variation_objet(variation_objet_instance)
     return created_variation_objet
 
-@router.patch("/{id}", response_model=VariationObjetRead)
+@router.patch("/{id}", response_model=VariationObjetRead, responses={
+    404: {"description": "variation id non trouvé"}})
 def patch_variation_objet(id: int, variation_objet: VariationObjetUpdate, session: Session = Depends(get_db)):
     """
     Partially update an object variation's information.

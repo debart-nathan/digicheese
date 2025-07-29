@@ -58,7 +58,8 @@ def post_objet(objet: ObjetCreate, session: Session = Depends(get_db)):
     created_objet = ObjetRepository(session).create_objet(objet_instance)
     return created_objet
 
-@router.patch("/{id}", response_model=ObjetRead)
+@router.patch("/{id}", response_model=ObjetRead, responses={
+    404: {"description": "objet id non trouvé"}})
 def patch_objet(id: int, objet: ObjetUpdate, session: Session = Depends(get_db)):
     """
     Partially update an object's information.
