@@ -23,7 +23,7 @@ def get_all_clients(offset: int = 0, limit: int = Query(default=100, le=100), se
     return ClientService(session).get_all(limit, offset)
 
 @router.get("/{id}", response_model=ClientRead, responses={
-    404:{"descripiton":"Client id non trouvé"}
+    404:{"description":"Client id non trouvé"}
 })
 def get_client(id: int, session: Session = Depends(get_db)):
     """
@@ -64,7 +64,7 @@ def post_client(client: ClientCreate, session: Session = Depends(get_db)):
     try:
         created_client = ClientService(session).create(client)
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=e)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return created_client
 
 @router.patch("/{id}", response_model=ClientRead, responses={
@@ -88,9 +88,9 @@ def patch_client(id: int, client: ClientUpdate, session: Session = Depends(get_d
     - HTTPException 404: If client is not found
     """
     try:
-        created_client = ClientService(session).patch(id, **client.model_dump(exclude_unset=True))
+        created_client = ClientService(session).patch(id, client)
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=e)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     if not created_client:
         raise HTTPException(status_code=404, detail=f"client :{id} non trouvé")
     return created_client

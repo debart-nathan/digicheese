@@ -34,7 +34,9 @@ def test_session():
     with Session(engine) as session:
         # Création d'un client
         robin = ClientModel(client_prenom="Robin", client_nom="HOTTON", client_adresse1="1 rue de la Paix")
+        daniel = ClientModel(client_prenom="Daniel", client_nom="HOTTON", client_adresse1="2 rue de la Paix")
         session.add(robin)
+        session.add(daniel)
         
         # Création d'une commune
         wervicq = Commune(commune_ville="Wervicq-Sud", commune_codepostal="59117")
@@ -45,6 +47,7 @@ def test_session():
         session.add(nord)
         
         # Association des entités
+        daniel.commune = wervicq
         robin.commune = wervicq
         wervicq.departement = nord
         
