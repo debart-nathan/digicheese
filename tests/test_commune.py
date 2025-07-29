@@ -30,6 +30,7 @@ def test_get_commune_by_id(client: TestClient):
     data = result.json()
     assert isinstance(data, dict)
     assert len(data) > 0
+    assert data["commune_ville"] == "Wervicq-Sud"
 
 def test_get_commune_by_id_404(client: TestClient):
     result: Response = client.get(f"{BASE_URL}/100")
@@ -78,6 +79,8 @@ def test_patch_commune_404(client: TestClient):
 def test_delete_commune(client: TestClient):
     result: Response = client.delete(f"{BASE_URL}/1")
     assert result.status_code == 204
+    result_alt: Response = client.get(f"{BASE_URL}/1")
+    assert result_alt.status_code == 404
 
 def test_delete_commune_404(client: TestClient):
     result: Response = client.delete(f"{BASE_URL}/1000")
