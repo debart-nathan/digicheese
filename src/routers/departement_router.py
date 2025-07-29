@@ -22,7 +22,9 @@ def get_all_departements(offset: int = 0, limit: int = Query(default=100, le=100
     """
     return DepartementRepository(session).get_all_departement(limit, offset)
 
-@router.get("/{id}", response_model=DepartementRead)
+@router.get("/{id}", response_model=DepartementRead,responses={
+    404:{"description":"Departement id non trouvé"}
+})
 def get_departement(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific department by ID.
@@ -60,7 +62,9 @@ def post_departement(departement: DepartementUpdate, session: Session = Depends(
     created_departement = DepartementRepository(session).create_departement(departement_instance)
     return created_departement
 
-@router.patch("/{id}", response_model=DepartementRead)
+@router.patch("/{id}", response_model=DepartementRead,responses={
+    404:{"description":"Departement id non trouvé"}
+})
 def patch_departement(id: int, departement : DepartementUpdate, session: Session = Depends(get_db)):
     """
     Partially update a department's information.
@@ -82,7 +86,9 @@ def patch_departement(id: int, departement : DepartementUpdate, session: Session
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"departement :{id} non trouvé")
     return created_departement
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT,responses={
+    404:{"description":"Departement id non trouvé"}
+})
 def delete_departement(id: int, session: Session = Depends(get_db)):
     """
     Delete a department by ID.

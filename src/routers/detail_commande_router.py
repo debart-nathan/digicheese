@@ -22,7 +22,9 @@ def get_all_detail_commande(offset: int = 0, limit: int = Query(default=100, le=
     """
     return DetailCommandeRepository(session).get_all_detail_commandes(limit, offset)
 
-@router.get("/{id}", response_model=DetailCommandeRead)
+@router.get("/{id}", response_model=DetailCommandeRead,responses={
+    404:{"description":"Commande detail id non trouvé"}
+})
 def get_detail_commande(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific order detail by ID.
@@ -58,7 +60,9 @@ def post_detail_commande(detail_commande: DetailCommandeCreate, session: Session
     created_detail_commande = DetailCommandeRepository(session).create_detail_commande(detail_commande_instance)
     return created_detail_commande
 
-@router.patch("/{id}", response_model=DetailCommandeRead)
+@router.patch("/{id}", response_model=DetailCommandeRead,responses={
+    404:{"description":"Commande detail id non trouvé"}
+})
 def patch_detail_commande(id: int, detail_commande: DetailCommandeUpdate, session: Session = Depends(get_db)):
     """
     Partially update an order detail's information.
@@ -79,7 +83,9 @@ def patch_detail_commande(id: int, detail_commande: DetailCommandeUpdate, sessio
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Detail Commande: {id} non trouvé")
     return created_detail_commande
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT,responses={
+    404:{"description":"Commande detail id non trouvé"}
+})
 def delete_detail_commande(id: int, session: Session = Depends(get_db)):
     """
     Delete an order detail by ID.

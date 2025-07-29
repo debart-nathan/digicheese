@@ -22,7 +22,9 @@ def get_all_commune(offset: int = 0, limit: int = Query(default=100, le=100), se
     """
     return CommuneRepository(session).get_all_communes(limit, offset)
 
-@router.get("/{id}", response_model=CommuneRead)
+@router.get("/{id}", response_model=CommuneRead,responses={
+    404:{"description":"Commune id non trouvé"}
+})
 def get_commune(id: int, session: Session = Depends(get_db)):
     """
     Retrieve a specific commune by ID.
@@ -37,7 +39,7 @@ def get_commune(id: int, session: Session = Depends(get_db)):
     Raises:
     - HTTPException 404: If commune is not found
     """
-    commune = CommuneRepository(session).get_commande(id)
+    commune = CommuneRepository(session).get_commune(id)
     if not commune:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"commune :{id} non trouvé")
     return commune
@@ -58,7 +60,9 @@ def post_commune(commune: CommuneCreate, session: Session = Depends(get_db)):
     created_commune = CommuneRepository(session).create_commune(commune_instance)
     return created_commune
 
-@router.patch("/{id}", response_model=CommuneRead)
+@router.patch("/{id}", response_model=CommuneRead,responses={
+    404:{"description":"Commune id non trouvé"}
+})
 def patch_commune(id: int, commune: CommuneUpdate, session: Session = Depends(get_db)):
     """
     Partially update a commune's information.
@@ -79,7 +83,9 @@ def patch_commune(id: int, commune: CommuneUpdate, session: Session = Depends(ge
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"commune :{id} non trouvé")
     return created_commune
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT,responses={
+    404:{"description":"Commune id non trouvé"}
+})
 def delete_commune(id: int, session: Session = Depends(get_db)):
     """
     Delete a commune by ID.

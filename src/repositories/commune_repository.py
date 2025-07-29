@@ -19,10 +19,10 @@ class CommuneRepository:
         get_commune(commune_id: int) -> Commune | None:
             Retrieves a Commune by its ID. Returns None if not found.
 
-        get_all_communes() -> List[Commune]:
+        get_all_communes(limit: int | None = None, offset: int | None = None) -> List[Commune]:
             Fetches all Commune records from the database.
 
-        update_commune(commune: Commune) -> Commune | None:
+        update_commune(commune_id: int, commune_update: dict) -> Commune | None:
             Updates an existing Commune with new values. Returns the updated instance
             or None if the Commune was not found.
 
@@ -66,11 +66,15 @@ class CommuneRepository:
         statement = select(Commune).where(Commune.commune_id == commune_id)
         return self.session.exec(statement).one_or_none()
 
-    def get_all_communes(self,limit: int | None = None, offset: int | None = None ) -> list[Commune]:
+    def get_all_communes(self, limit: int | None = None, offset: int | None = None) -> list[Commune]:
         """
         Retrieve all Communes.
 
         This method fetches all Commune records from the database.
+
+        Parameters:
+            limit (int) : an integer to specify the maximum number of results.
+            offset (int) : an integer to specify the number of lines to ignore.
 
         Returns:
             List[Commune]: A list of all Commune instances in the database.
@@ -78,7 +82,7 @@ class CommuneRepository:
         statement = select(Commune).limit(limit).offset(offset)
         return list(self.session.exec(statement).all())
 
-    def update_commune(self, commune_id: int ,commune_update: dict) -> Commune | None:
+    def update_commune(self, commune_id: int, commune_update: dict) -> Commune | None:
         """
         Update an existing Commune.
 
@@ -86,7 +90,8 @@ class CommuneRepository:
         with the values from the provided Commune instance.
 
         Parameters:
-            commune (Commune): The Commune instance containing updated values.
+            commune_id (int): The ID of the Commune to update.
+            commune_update (dict): The Commune instance containing updated values.
 
         Returns:
             Commune | None: The updated Commune instance if found, otherwise None.
