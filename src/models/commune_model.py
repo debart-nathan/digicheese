@@ -67,7 +67,7 @@ class CommuneCreate(CommuneBase):
     pass
 
 
-class CommuneUpdate(SQLModel):
+class CommuneUpdate(CommuneBase):
     """
     Schéma utilisé pour mettre à jour l'association d'un département à une commune.
 
@@ -77,7 +77,10 @@ class CommuneUpdate(SQLModel):
     fk_commune_departement: str | None = Field(
         foreign_key="t_departements.departement_code",
         max_length=2,
-        description="Nouveau code département mis à jour"
+        nullable=True,
+        description="Nouveau code département mis à jour",
+        default=None
+        
     )
 
 

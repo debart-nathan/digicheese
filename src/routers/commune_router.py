@@ -78,7 +78,7 @@ def patch_commune(id: int, commune: CommuneUpdate, session: Session = Depends(ge
     Raises:
     - HTTPException 404: If commune is not found
     """
-    created_commune = CommuneRepository(session).update_commune(id, **commune.model_dump(exclude_unset=True))
+    created_commune = CommuneRepository(session).update_commune(id, commune.model_dump(exclude_unset=True))
     if not created_commune:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"commune :{id} non trouvé")
     return created_commune
