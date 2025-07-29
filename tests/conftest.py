@@ -21,6 +21,7 @@ from src.models.colis_model import Colis
 from src.models.commande_model import Commande
 from src.models.variation_objet_model import VariationObjet
 from src.models.detail_colis_model import DetailColis
+from src.models.detail_commande_model import DetailCommande
 
 ############
 # Fixtures #
@@ -53,7 +54,12 @@ def test_session():
         # Création d'un colis
         colis = Colis(colis_code_suivi="1445", colis_timbre=14.5, colis_commentaire="Bien envoyé")
         session.add(colis)
-
+        detail_commande = DetailCommande(
+            detail_commande_quantitee = 25,
+            detail_commande_commentaire = ""
+        )
+        session.add(detail_commande)
+        
         #Création d'un commande
         commande = Commande(client_timbre = "14.5", commande_timbre = "14.5", client_cheque = "20", commande_commentaire = "Appeller le client")
         session.add(commande)
@@ -70,6 +76,9 @@ def test_session():
             objet_points=30
         )
         session.add_all([magic_sword,magic_staff])
+        
+        #Création d'un détail commande
+
 
         # Création d'une variation pour l'objet
         variation = VariationObjet(
