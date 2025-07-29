@@ -2,3 +2,5 @@
 annexes/
 .venv/
 .env
+test.db
+.coverage
