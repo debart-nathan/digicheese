@@ -81,7 +81,7 @@ def patch_departement(id: int, departement : DepartementUpdate, session: Session
     - HTTPException 404: If department is not found
     
     """
-    created_departement = DepartementRepository(session).update_departement(id, **departement.model_dump(exclude_unset=True))
+    created_departement = DepartementRepository(session).update_departement(id, departement.model_dump(exclude_unset=True))
     if not created_departement:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"departement :{id} non trouvé")
     return created_departement
