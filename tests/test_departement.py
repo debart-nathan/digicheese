@@ -16,20 +16,18 @@ def test_get_departement_by_id(client: TestClient):
     data = result.json()
     assert data["departement_nom"] == "Nord"
 
-# def test_create_departement(client: TestClient):
-#     new_departement = {
-#         "firstname": "john",
-#         "lastname": "doe",
-#         "address_line_1": "123 Main St",
-#         "newsletter": 1
-#     }
-#     result: Response = client.post(f"{BASE_URL}/59", json=new_departement)
-#     assert result.status_code == 201
-#     created_departement: dict = result.json()
-#     assert created_departement["firstname"] == "John"
-#     assert created_departement["lastname"] == "DOE"
-#     assert created_departement["address_line_1"] == "123 Main St"
-#     assert created_departement["newsletter"] == True
+def test_create_departement(client: TestClient):
+    new_departement = {
+        "departement_nom": "Rhone",
+        "departement_code": "69"
+
+    }
+    result: Response = client.post(f"{BASE_URL}/", json=new_departement)
+    assert result.status_code == 201
+    created_departement: dict = result.json()
+    assert created_departement["departement_nom"] == "Rhone"
+    assert created_departement["departement_code"] == "69"
+
 
 def test_patch_departement(client: TestClient):
     new_departement = {
@@ -50,12 +48,9 @@ def test_delete_departement(client: TestClient):
 def test_delete_departement_404(client: TestClient):
     result:Response= client.delete(f"{BASE_URL}/64")
     assert result.status_code == 404
-    
-def test_delete_departement_404(client: TestClient):
-    result:Response= client.delete(f"{BASE_URL}/64")
-    assert result.status_code == 404
 
-def test_create_departement_by_id_404(client: TestClient):
+
+def test_get_departement_by_id_404(client: TestClient):
     result: Response = client.get(f"{BASE_URL}/999999")
     assert result.status_code == 404
     

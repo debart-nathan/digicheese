@@ -46,7 +46,7 @@ def get_departement(id: int, session: Session = Depends(get_db)):
     return departement
 
 @router.post("/", response_model=DepartementRead, status_code=status.HTTP_201_CREATED)
-def post_departement(departement: DepartementUpdate, session: Session = Depends(get_db)):
+def post_departement(departement: DepartementCreate, session: Session = Depends(get_db)):
     """
     Create a new department.
     

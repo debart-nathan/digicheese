@@ -78,7 +78,7 @@ def patch_objet(id: int, objet: ObjetUpdate, session: Session = Depends(get_db))
     Raises:
     - HTTPException 404: If object is not found
     """
-    created_objet = ObjetRepository(session).update_objet(id, **objet.model_dump(exclude_unset=True))
+    created_objet = ObjetRepository(session).update_objet(id, objet.model_dump(exclude_unset=True))
     if not created_objet:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Objet: {id} non trouvé")
     return created_objet

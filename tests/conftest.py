@@ -15,6 +15,7 @@ from src.database import get_db
 from src.models.client_model import Client as ClientModel
 from src.models.commune_model import Commune
 from src.models.departement_model import Departement
+from src.models.objet_model import Objet
 from src.models.colis_model import Colis
 
 ############
@@ -25,40 +26,43 @@ from src.models.colis_model import Colis
 def test_session():
     """
     Crée une base de données SQLite en fichier pour vérifier.
-    Initialise les tables, et insère un permet d'insérer des données par défaut.
+    Initialise les tables et insère des données par défaut, incluant un Objet.
     """
     db_url = "sqlite:///./test.db"
-    engine = create_engine(db_url, echo=False)
+    engine = create_engine(db_url, echo=False, connect_args={"check_same_thread": False})
     SQLModel.metadata.drop_all(engine)
     SQLModel.metadata.create_all(engine)
     
     with Session(engine) as session:
-        # Création d'un client
+        # Création des clients
         robin = ClientModel(client_prenom="Robin", client_nom="HOTTON", client_adresse1="1 rue de la Paix")
-        session.add(robin)
+        daniel = ClientModel(client_prenom="Daniel", client_nom="HOTTON", client_adresse1="2 rue de la Paix")
+        session.add_all([robin, daniel])
         
-        # Création d'une commune
+        # Création de la commune et du département
         wervicq = Commune(commune_ville="Wervicq-Sud", commune_codepostal="59117")
-        session.add(wervicq)
-        
-        # Création d'un département
         nord = Departement(departement_nom="Nord", departement_code="59")
         var = Departement(departement_nom="Var", departement_code="83")
-        session.add(nord)
+        session.add_all([wervicq, nord])
         session.add(var)
 
         #Création d'un colis
         colis = Colis(colis_code_suivi = "1445", colis_timbre = "14.5", colis_commentaire = "Bien envoyé")
         session.add(colis)
-        
-        # Association des entités
+
+        # Associations
         robin.commune = wervicq
+        daniel.commune = wervicq
         wervicq.departement = nord
-        
-        # Commit les changements
+
+        # Création d'un objet
+        magic_sword = Objet(
+            objet_libelee="Épée magique",
+            objet_points=50
+        )
+        session.add(magic_sword)
+
         session.commit()
-        
-        # Retourne la session de test
         yield session
 
 
