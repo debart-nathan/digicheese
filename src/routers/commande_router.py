@@ -78,7 +78,7 @@ def patch_commande(id: int, commande: CommandeUpdate, session: Session = Depends
     Raises:
     - HTTPException 404: If order is not found
     """
-    created_commande = CommandeRepository(session).update_commande(id, **commande.model_dump(exclude_unset=True))
+    created_commande = CommandeRepository(session).update_commande(id, commande.model_dump(exclude_unset=True))
     if not created_commande:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"commande :{id} non trouvé")
     return created_commande
