@@ -21,6 +21,13 @@ The project was carried out as part of the Data Engineer 2025-D04 training cours
 └───run.py
 ```
 
+# Dependencies
+Python 3.10+  
+MySQL ou MariaDB (local or distant)  
+`git` (version management)  
+(Recommended) Virtual environments Python (`venv`)
+
+
 
 # Getting Started
 
