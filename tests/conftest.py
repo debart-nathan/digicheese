@@ -43,7 +43,9 @@ def test_session():
         
         # Création d'un département
         nord = Departement(departement_nom="Nord", departement_code="59")
+        var = Departement(departement_nom="Var", departement_code="83")
         session.add(nord)
+        session.add(var)
 
         #Création d'un colis
         colis = Colis(colis_code_suivi = "1445", colis_timbre = "14.5", colis_commentaire = "Bien envoyé")
