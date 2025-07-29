@@ -44,7 +44,11 @@ class DepartementCreate(DepartementBase):
 
     Hérite de tous les champs du schéma de base. Utilisé dans les opérations POST.
     """
-    pass
+    departement_code: str | None = Field(
+        primary_key=True,
+        max_length=2,
+        description="Code officiel du département (clé primaire, 2 caractères)"
+    )
 
 
 class DepartementUpdate(DepartementBase):

@@ -4,3 +4,4 @@ annexes/
 .env
 .coverage
 test.db
+.coverage
