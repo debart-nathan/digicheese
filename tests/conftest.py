@@ -17,6 +17,7 @@ from src.models.commune_model import Commune
 from src.models.departement_model import Departement
 from src.models.objet_model import Objet
 from src.models.colis_model import Colis
+from src.models.detail_commande_model import DetailCommande
 
 ############
 # Fixtures #
@@ -49,7 +50,12 @@ def test_session():
         #Création d'un colis
         colis = Colis(colis_code_suivi = "1445", colis_timbre = "14.5", colis_commentaire = "Bien envoyé")
         session.add(colis)
-
+        detail_commande = DetailCommande(
+            detail_commande_quantitee = 25,
+            detail_commande_commentaire = ""
+        )
+        session.add(detail_commande)
+        
         # Associations
         robin.commune = wervicq
         daniel.commune = wervicq
@@ -61,6 +67,9 @@ def test_session():
             objet_points=50
         )
         session.add(magic_sword)
+        
+        #Création d'un détail commande
+
 
         session.commit()
         yield session

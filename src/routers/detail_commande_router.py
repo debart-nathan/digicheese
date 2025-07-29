@@ -78,7 +78,7 @@ def patch_detail_commande(id: int, detail_commande: DetailCommandeUpdate, sessio
     Raises:
     - HTTPException 404: If order detail is not found
     """
-    created_detail_commande = DetailCommandeRepository(session).update_detail_commande(id, **detail_commande.model_dump(exclude_unset=True))
+    created_detail_commande = DetailCommandeRepository(session).update_detail_commande(id, detail_commande.model_dump(exclude_unset=True))
     if not created_detail_commande:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Detail Commande: {id} non trouvé")
     return created_detail_commande
